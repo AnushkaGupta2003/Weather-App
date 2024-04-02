@@ -56,7 +56,7 @@
         }
         else{
             let data = await response.json();
-       
+       console.log(data);
      
        
        document.querySelector(".city").innerHTML= data.name;
@@ -83,10 +83,10 @@
         else{
            
             let data1 = await response.json();
+            console.log(data1);
             const x= data1.lat;
             const y=data1.lon;
-             console.log(x);
-            console.log(y);
+           
             checkweather(x,y);
         } 
      }
