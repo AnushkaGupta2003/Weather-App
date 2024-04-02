@@ -41,14 +41,15 @@
     <script>
         const searchBox= document.querySelector(".search input");
         const searchBtn= document.querySelector(".search button");
-
+       
+       
       const apikey="ee357f5373c6606b5688373891fe3c30";
-      const apiurl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-        
-      
-      async function checkweather(city){
-        const response= await fetch( apiurl + city +`&appid=${apikey}`);
-        if( response.status == 404)
+      const cordapiurl="http://api.openweathermap.org/geo/1.0/direct?q=";
+      const apiurl="https://api.openweathermap.org/data/2.5/weather?lat=";
+
+        async function checkweather(lat,lon){
+        const response1= await fetch( apiurl + lat + `&lon=${lon}`+`&appid=${apikey}`+`&units=metric`);
+        if( response1.status == 404)
         {
             document.querySelector(".error").style.display= "block";
             document.querySelector(".weather").style.display= "none";
@@ -69,8 +70,30 @@
         }
        
       }
+
+        
+        
+     async function getcord(city){
+        const response= await fetch( cordapiurl + city +`&appid=${apikey}`);
+        if( response.status == 404)
+        {
+            document.querySelector(".error").style.display= "block";
+            document.querySelector(".weather").style.display= "none";
+        }
+        else{
+            console.log(data1);
+            let data1 = await response.json();
+            const x= data1.lat;
+            const y=data1.lon;
+            
+            checkweather(x,y);
+        } 
+     }
+      
+      
+      
      searchBtn.addEventListener("click", ()=>{
-        checkweather(searchBox.value);
+        getcord(searchBox.value);
      })
         
       
